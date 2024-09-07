@@ -1,0 +1,20 @@
+[package]
+name = "osvg"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "osvg svgo"
+repository = "https://github.com/ahaoboy/osvg"
+homepage = "https://github.com/ahaoboy/osvg"
+authors = ["ahaoboy"]
+
+[dependencies]
+rquickjs = { version = "0.6.2", features = [
+  "loader",
+] }
+
+anyhow = "1.0.87"
+clap = { version = "4.5.17", features = ["derive"] }
+
+[profile.release]
+opt-level = 3
