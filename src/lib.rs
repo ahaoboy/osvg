@@ -1,4 +1,3 @@
-use anyhow::Ok;
 use rquickjs::{
     loader::{BuiltinResolver, ModuleLoader},
     module::ModuleDef,
@@ -31,9 +30,9 @@ impl ModuleDef for OsModule {
     }
 }
 
-pub fn osvg(svg: &str) -> anyhow::Result<String> {
-    let runtime = Runtime::new()?;
-    let context = Context::full(&runtime)?;
+pub fn osvg(svg: &str) -> Option<String> {
+    let runtime = Runtime::new().ok()?;
+    let context = Context::full(&runtime).ok()?;
     let loader = (ModuleLoader::default().with_module("os", OsModule),);
     let resolver = (BuiltinResolver::default().with_module("os"),);
     runtime.set_loader(resolver, loader);
@@ -44,17 +43,17 @@ pub fn osvg(svg: &str) -> anyhow::Result<String> {
         let code = include_str!("../dist/osvg.js");
         Module::evaluate(ctx.clone(), name, code)
             .unwrap()
-            .finish::<Value>()?;
+            .finish::<Value>().ok()?;
 
-        let optimize: Function = global.get("optimize")?;
+        let optimize: Function = global.get("optimize").ok()?;
         // TODO: add config
         // let config = Object::new(ctx)?;
         // config.set("multipass", true)?;
         // let ret: Object = optimize.call((svg, config))?;
-        let ret: Object = optimize.call((svg,))?;
-        let data: String = ret.get("data")?;
-        Ok(data)
+        let ret: Object = optimize.call((svg,)).ok()?;
+        let data: String = ret.get("data").ok()?;
+        Some(data)
     })?;
 
-    Ok(s)
+    Some(s)
 }

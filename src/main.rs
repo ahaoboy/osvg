@@ -7,13 +7,9 @@ struct Args {
     output: String,
 }
 
-fn main() -> anyhow::Result<()> {
-    let Args{
-      input,
-      output,
-    } = Args::parse();
-    let svg = std::fs::read_to_string(input)?;
-    let s = osvg(&svg)?;
-    std::fs::write(output, s)?;
-    Ok(())
+fn main() {
+    let Args { input, output } = Args::parse();
+    let svg = std::fs::read_to_string(input).unwrap();
+    let s = osvg(&svg).unwrap();
+    std::fs::write(output, s).unwrap();
 }

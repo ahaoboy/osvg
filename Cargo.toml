@@ -1,6 +1,6 @@
 [package]
 name = "osvg"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 license = "MIT"
 description = "osvg svgo"
@@ -9,12 +9,20 @@ homepage = "https://github.com/ahaoboy/osvg"
 authors = ["ahaoboy"]
 
 [dependencies]
-rquickjs = { version = "0.6.2", features = [
-  "loader",
-] }
+rquickjs = { version = "0.6.2", features = ["loader", "bindgen"] }
+clap = { version = "4.5.20", features = ["derive"], optional = true }
 
-anyhow = "1.0.87"
-clap = { version = "4.5.17", features = ["derive"] }
+[features]
+bindgen = ["rquickjs/bindgen"]
+cli = ["clap"]
+
+[[bin]]
+required-features = ["cli"]
+name = "osvg"
 
 [profile.release]
+debug = false
+lto = true
+strip = true
 opt-level = 3
+codegen-units = 1
