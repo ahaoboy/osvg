@@ -10,6 +10,6 @@ struct Args {
 fn main() {
     let Args { input, output } = Args::parse();
     let svg = std::fs::read_to_string(input).unwrap();
-    let s = osvg(&svg).unwrap();
+    let s = osvg(&svg, None).unwrap();
     std::fs::write(output, s).unwrap();
 }

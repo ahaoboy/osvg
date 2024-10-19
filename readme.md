@@ -6,7 +6,7 @@ A wrapper library using [rquickjs](https://github.com/DelSkayn/rquickjs) and [sv
 ```bash
 cargo binstall osvg
 or
-cargo install osvg
+cargo install osvg --features=cli
 ```
 
 ## usage
@@ -14,6 +14,30 @@ cargo install osvg
 ```bash
 
 osvg ./input.svg ./output.svg
+```
+
+
+## config
+
+Pass the svgo configuration object as a string
+
+```rust
+let s = osvg(&svg, Some(r#"
+{
+  plugins: [
+    {
+      name: "preset-default",
+      params: {
+        overrides: {
+          cleanupIds: false,
+          inlineStyles: false,
+          // minifyStyles: false,
+        },
+      },
+    },
+  ],
+}
+"#.to_string())).unwrap();
 ```
 
 ## perf
