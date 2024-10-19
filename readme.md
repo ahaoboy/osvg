@@ -37,7 +37,7 @@ let s = osvg(&svg, Some(r#"
     },
   ],
 }
-"#.to_string())).unwrap();
+"#)).unwrap();
 ```
 
 ## perf

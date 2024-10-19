@@ -30,7 +30,7 @@ impl ModuleDef for OsModule {
     }
 }
 
-pub fn osvg(svg: &str, config: Option<String>) -> Option<String> {
+pub fn osvg(svg: &str, config: Option<&str>) -> Option<String> {
     let runtime = Runtime::new().ok()?;
     let context = Context::full(&runtime).ok()?;
     let loader = (ModuleLoader::default().with_module("os", OsModule),);
@@ -46,7 +46,7 @@ pub fn osvg(svg: &str, config: Option<String>) -> Option<String> {
             .finish::<Value>()
             .ok()?;
         let optimize: Function = global.get("optimize").ok()?;
-        let config_code = format!("({})", config.unwrap_or("undefined".to_string()));
+        let config_code = format!("({})", config.unwrap_or("undefined"));
         let config: Value = ctx.eval(config_code).ok()?;
         let ret: Object = optimize.call((svg, config)).ok()?;
         let data: String = ret.get("data").ok()?;
