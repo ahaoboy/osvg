@@ -9,8 +9,8 @@ homepage = "https://github.com/ahaoboy/osvg"
 authors = ["ahaoboy"]
 
 [dependencies]
-rquickjs = { version = "0.6.2", features = ["loader", "bindgen"] }
-clap = { version = "4.5.20", features = ["derive"], optional = true }
+rquickjs = { version = "0.8", features = ["loader", "bindgen"] }
+clap = { version = "4.5", features = ["derive"], optional = true }
 
 [features]
 bindgen = ["rquickjs/bindgen"]
